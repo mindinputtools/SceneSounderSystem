@@ -1,0 +1,18 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+services:
+  hello-espeak:
+    image: hello-espeak
+    build:
+      context: .
+      dockerfile: Tests/HelloEspeak/Dockerfile
+    ports:
+      - 5000:5000
+    environment:
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+    volumes:
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - /run/user/1000/pulse/native:/run/user/1000/pulse/native
+    user: 1000:1000

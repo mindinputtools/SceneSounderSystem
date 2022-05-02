@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "HelloESpeak": {
+      "commandName": "Project"
+    },
+    "Raspberry": {
+      "commandName": "Executable",
+      "remoteDebugEnabled": true,
+      "authenticationMode": "None",
+      "remoteDebugMachine": "raspberrypi"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
