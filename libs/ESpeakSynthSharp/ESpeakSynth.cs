@@ -10,11 +10,12 @@ using Microsoft.Win32;
 using MITAudioLib;
 namespace ESpeakSynthSharp
 {
-    public static class ESpeakSynth
+    public class ESpeakSynth
     {
-        private static string dataPath = "";
+        private string dataPath = "";
+        private Client client;
 
-        static ESpeakSynth()
+        public ESpeakSynth()
         {
             if (!MITAudio.IsAudioOpen())
                 throw new Exception("ESpeakSynthSharp: Audio device is not open, please use MITAudio.OpenAduio() first!");
@@ -34,25 +35,38 @@ namespace ESpeakSynthSharp
             }
 #endif
             if (IsInstalled)
-                Client.Initialize(dataPath);
+            {
+                client = new Client();
+                client.Initialize(dataPath);
+            }
         }
 
-        public static bool IsInstalled { get; } = true;
-        public static bool IsSpeaking
+        public bool IsInstalled { get; } = true;
+        public bool IsSpeaking
         {
             get
             {
-                if (Client._isProcessing) return true;
-                else if (EventHandler._player.IsPlaying) return true;
+                if (client._isProcessing) return true;
+                else if ( client.eventHandler._player.IsPlaying) return true;
                 else return false;
             }
         }
-        public static bool Speak(string text)
+        public bool Speak(string text)
         {
             if (!IsInstalled) return false;
 
-            var r = Client.Speak(text);
+            var r = client.Speak(text);
             return r;
+        }
+        public void Stop()
+        {
+            client._isProcessing = false;
+            client.eventHandler._player.Stop();
+            client.Stop();
+        }
+        public void Terminate()
+        {
+            client.Terminate();
         }
 #if Windows
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]

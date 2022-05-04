@@ -53,10 +53,16 @@ namespace ESpeakSynthSharp
             SSML = 0x10,
         }
 
-        static bool Initialized = false;
-        internal static bool _isProcessing { get; set; } = false;
-        internal static EventHandler.SynthCallback cb = EventHandler.Handle; // To prevent garbage collection of the callback that is used in unsafe space, we store it here
-        public static void Initialize(string path)
+        bool Initialized = false;
+        internal bool _isProcessing { get; set; } = false;
+        internal EventHandler eventHandler;
+        internal EventHandler.SynthCallback cb;
+        public Client()
+        {
+            eventHandler = new(this);
+            cb = eventHandler.Handle; // To prevent garbage collection of the callback that is used in unsafe space, we store it here
+        }
+        public void Initialize(string path)
         {
             var result = espeak_Initialize(AudioOutput.Retrieval, 0, path, 0);
             if (result == (int)Error.EE_INTERNAL_ERROR)
@@ -69,7 +75,7 @@ namespace ESpeakSynthSharp
             Initialized = true;
         }
 
-        public static bool SetRate(int rate)
+        public bool SetRate(int rate)
         {
             if (rate < 80 && rate > 450)
             {
@@ -80,7 +86,7 @@ namespace ESpeakSynthSharp
             return CheckResult(result);
         }
 
-        static bool CheckResult(Error result)
+        bool CheckResult(Error result)
         {
             if (result == Error.EE_OK)
             {
@@ -102,33 +108,36 @@ namespace ESpeakSynthSharp
             }
         }
 
-        public static bool Speak(string text)
+        public bool Speak(string text)
         {
             _isProcessing = true;
             var result = espeak_Synth(text, text.Length * Marshal.SystemDefaultCharSize);
-            
+
             return CheckResult(result);
         }
 
-        public static bool SpeakSSML(string text)
+        public bool SpeakSSML(string text)
         {
             var result = espeak_Synth(text, text.Length * Marshal.SystemDefaultCharSize, 0, PositionType.Character, 0, SpeechFlags.CharsUtf8 | SpeechFlags.SSML);
             return CheckResult(result);
         }
 
-        public static bool Stop()
+        public bool Stop()
         {
             var result = espeak_Cancel();
             return CheckResult(result);
         }
-
-        public static bool SetVoiceByName(string name)
+        public void Terminate()
+        {
+            espeak_Terminate();
+        }
+        public bool SetVoiceByName(string name)
         {
             var result = espeak_SetVoiceByName(name);
             return CheckResult(result);
         }
 
-        public static Voice GetCurrentVoice()
+        public Voice GetCurrentVoice()
         {
             IntPtr espeakVoicePtr = espeak_GetCurrentVoice();
             ESpeakVoice espeakVoice = (ESpeakVoice)Marshal.PtrToStructure(espeakVoicePtr, typeof(ESpeakVoice));
@@ -164,6 +173,8 @@ namespace ESpeakSynthSharp
 
         [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern Error espeak_Cancel();
+        [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
+        static extern void espeak_Terminate();
 
         [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern void espeak_SetSynthCallback(EventHandler.SynthCallback callback);

@@ -13,8 +13,9 @@ app.MapPost("/speech", (SpeechService speech, SpeakDTO speak) =>
 {
     return speech.Speak(speak);
 });
-app.MapGet("/speech", (SpeechService speech) =>
+app.MapGet("/speech", (SpeechService speech, bool? stop) =>
 {
+    if (stop != null && stop.Value) speech.Stop();
     return speech.IsSpeaking();
 });
 

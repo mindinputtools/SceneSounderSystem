@@ -1,0 +1,13 @@
+POST http://scene-sounder:8080/speech
+Content-Type: application/json
+
+{
+    "text": "Hi there! Hello and welcome! This is a test, great to see it working! Ok, so let's continue and bring on some more features!"
+}
+###
+POST http://scene-sounder:8080/speech
+Content-Type: application/json
+
+{
+    "text": "Ok, so let's get going with something else.. Yes, that's right!!"
+}

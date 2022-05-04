@@ -10,12 +10,17 @@ namespace ESpeakSynthSharp
 {
     class EventHandler
     {
-
+        public EventHandler(Client client)
+        {
+            this.client = client;
+        }
         public delegate int SynthCallback(IntPtr wavePtr, int bufferLength, IntPtr eventsPtr);
-        static List<short> _samples = new List<short>();
-        static MemoryStream Stream;
-        public static MITAudioPlayer _player = new MITAudioPlayer(22050, OpenTK.Audio.OpenAL.ALFormat.Mono16);
-        public static int Handle(IntPtr wavePtr, int bufferLength, IntPtr eventsPtr)
+        List<short> _samples = new List<short>();
+        MemoryStream Stream;
+        internal MITAudioPlayer _player = new MITAudioPlayer(22050, OpenTK.Audio.OpenAL.ALFormat.Mono16);
+        private readonly Client client;
+
+        public int Handle(IntPtr wavePtr, int bufferLength, IntPtr eventsPtr)
         {
             //Console.WriteLine("Received event!");
             //Console.WriteLine("Buffer length is " + bufferLength);
@@ -25,7 +30,7 @@ namespace ESpeakSynthSharp
                 
                 PlayAudio();
                 _samples.Clear();
-                Client._isProcessing = false;
+                client._isProcessing = false;
                 return 0;
             }
 
@@ -42,7 +47,7 @@ namespace ESpeakSynthSharp
             return 0; // continue synthesis
         }
 
-        static List<Event> MarshalEvents(IntPtr eventsPtr)
+        List<Event> MarshalEvents(IntPtr eventsPtr)
         {
             var events = new List<Event>();
             int structSize = Marshal.SizeOf(typeof(Event));
@@ -61,7 +66,7 @@ namespace ESpeakSynthSharp
             return events;
         }
 
-        static int WriteAudioToStream(IntPtr wavePtr, int bufferLength)
+        int WriteAudioToStream(IntPtr wavePtr, int bufferLength)
         {
             if (wavePtr == IntPtr.Zero)
             {
@@ -77,7 +82,7 @@ namespace ESpeakSynthSharp
         }
 
 
-        static void PlayAudio()
+        void PlayAudio()
         {
             
             _player.SetBuffer(_samples.ToArray());
