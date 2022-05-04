@@ -1,14 +1,17 @@
-
 version: '3.4'
 
 services:
-  helloespeak:
-    image: helloespeak
+  speech-api:
+    image: speech-api
     build:
       context: .
-      dockerfile: tests/HelloESpeak/Dockerfile
+      dockerfile: services/SpeechApi/Dockerfile
     environment:
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8080:8080"
+
     volumes:
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native
