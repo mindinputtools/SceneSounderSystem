@@ -147,25 +147,25 @@ namespace ESpeakSynthSharp
             };
         }
 
-        [DllImport("libespeak-ng", CharSet = CharSet.Auto)]
+        [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern Error espeak_SetVoiceByName([MarshalAs(UnmanagedType.LPUTF8Str)] string name);
 
-        [DllImport("libespeak-ng", CharSet = CharSet.Auto)]
+        [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern Error espeak_SetParameter(Parameter parameter, int value, ParameterType type);
 
-        [DllImport("libespeak-ng", CharSet = CharSet.Auto)]
+        [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern IntPtr espeak_GetCurrentVoice();
 
-        [DllImport("libespeak-ng", CharSet = CharSet.Auto)]
+        [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern Error espeak_Synth([MarshalAs(UnmanagedType.LPUTF8Str)] string text, int size, uint startPosition = 0, PositionType positionType = PositionType.Character, uint endPosition = 0, SpeechFlags flags = SpeechFlags.CharsUtf8, UIntPtr uniqueIdentifier = default(UIntPtr), IntPtr userData = default(IntPtr));
 
-        [DllImport("libespeak-ng", CharSet = CharSet.Auto)]
+        [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern int espeak_Initialize(AudioOutput output, int bufferLength, string path, int options);
 
-        [DllImport("libespeak-ng", CharSet = CharSet.Auto)]
+        [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern Error espeak_Cancel();
 
-        [DllImport("libespeak-ng", CharSet = CharSet.Auto)]
+        [DllImport("libespeak-ng.so.1", CharSet = CharSet.Auto)]
         static extern void espeak_SetSynthCallback(EventHandler.SynthCallback callback);
     }
 }

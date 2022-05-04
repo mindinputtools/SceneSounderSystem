@@ -8,12 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ESpeakSynthSharp" Version="1.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\libs\ESpeakSynthSharp\ESpeakSynthSharp.csproj" />
-    <ProjectReference Include="..\..\libs\MITAudioLib\MITAudioLib.csproj" />
-  </ItemGroup>
 
 </Project>

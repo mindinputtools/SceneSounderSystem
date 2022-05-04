@@ -6,7 +6,7 @@ services:
     image: helloespeak
     build:
       context: .
-      dockerfile: HelloESpeak.Dockerfile
+      dockerfile: tests/HelloESpeak/Dockerfile
     environment:
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
     volumes:
