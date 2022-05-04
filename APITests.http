@@ -11,3 +11,7 @@ Content-Type: application/json
 {
     "text": "Ok, so let's get going with something else.. Yes, that's right!!"
 }
+###
+http://scene-sounder:8080/speech
+###
+http://scene-sounder:8080/speech?stop=true
