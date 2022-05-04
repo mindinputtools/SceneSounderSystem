@@ -4,8 +4,8 @@ using SpeechApi.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<SpeechService>();
-builder.Services.AddHostedService<SpeechService>();
+builder.Services.AddScoped<SpeechService>();
+builder.Services.AddHostedService<LifeCycleService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
