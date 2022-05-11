@@ -21,10 +21,12 @@ namespace SpeechApi
                     var reset = new AutoResetEvent(false);
                     var completed = () =>
                     {
+                        Console.WriteLine("Speech completed!");
                         reset.Set();
                     };
                     Speaker = new ESpeakSynth(completed);
                     Speaker.Speak(queueEntry.Speak.Text);
+                    Console.WriteLine("Waiting for speech to complete..");
                     reset.WaitOne(TimeSpan.FromSeconds(120));
                     Speaker.Terminate();
                 }
