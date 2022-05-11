@@ -9,7 +9,7 @@ builder.Services.AddHostedService<LifeCycleService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapPost("/speech", (SpeechService speech, SpeakDTO speak) =>
+app.MapPost("/api/speech", (SpeechService speech, SpeakDTO speak) =>
 {
     return speech.Speak(speak);
 });

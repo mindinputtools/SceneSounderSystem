@@ -1,7 +1,36 @@
-﻿namespace SpeechApi
+﻿using ESpeakSynthSharp;
+using SpeechApi.Models;
+using System.Collections.Concurrent;
+
+namespace SpeechApi
 {
     public static class State
     {
-        public static ESpeakSynthSharp.ESpeakSynth Speaker = null;
+        public static ConcurrentQueue<QueueEntry> SpeechQueue { get; set; } = new();
+        public static ESpeakSynth Speaker = null;
+        public static bool QueueRunning = false;
+        public static void ProcessQueue()
+        {
+            if (SpeechQueue.IsEmpty) return;
+            bool done = false;
+            State.QueueRunning = true;
+            do
+            {
+                if (SpeechQueue.TryDequeue(out var queueEntry))
+                {
+                    var reset = new AutoResetEvent(false);
+                    var completed = () =>
+                    {
+                        reset.Set();
+                    };
+                    Speaker = new ESpeakSynth(completed);
+                    Speaker.Speak(queueEntry.Speak.Text);
+                    reset.WaitOne(TimeSpan.FromSeconds(120));
+                    Speaker.Terminate();
+                }
+                else done = true;
+            } while (!done);
+            QueueRunning = false;            
+        }
     }
 }

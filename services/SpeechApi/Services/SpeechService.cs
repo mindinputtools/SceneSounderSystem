@@ -11,15 +11,13 @@ namespace SpeechApi.Services
             if (State.Speaker == null) State.Speaker = new ESpeakSynth();
         }
 
-        public bool Speak(SpeakDTO speakDTO)
+        public Guid Speak(SpeakDTO speakDTO)
         {
-            if (State.Speaker.IsSpeaking) return false;
-            // ToDo, figure out a better way to make sure the speech speaks the new text and not the previous one
-            // This is a hack for now..
-            State.Speaker.Stop();
-            State.Speaker.Terminate();
-            State.Speaker = new ESpeakSynth();
-            return State.Speaker.Speak(speakDTO.Text);
+            QueueEntry queueEntry = new QueueEntry();
+            queueEntry.Speak = speakDTO;
+            State.SpeechQueue.Enqueue(queueEntry);
+            if (!State.QueueRunning) Task.Run(() => State.ProcessQueue());
+            return queueEntry.Id;
         }
         public bool IsSpeaking()
         {
