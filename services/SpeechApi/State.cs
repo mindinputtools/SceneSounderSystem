@@ -28,6 +28,7 @@ namespace SpeechApi
                     Speaker.Speak(queueEntry.Speak.Text);
                     Console.WriteLine("Waiting for speech to complete..");
                     reset.WaitOne(TimeSpan.FromSeconds(120));
+                    Console.WriteLine("Waiting done!");
                     Speaker.Terminate();
                 }
                 else done = true;
