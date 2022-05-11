@@ -15,7 +15,7 @@ namespace ESpeakSynthSharp
         private string dataPath = "";
         private Client client;
 
-        public ESpeakSynth()
+        public ESpeakSynth(Action completed = null)
         {
             if (!MITAudio.IsAudioOpen())
                 throw new Exception("ESpeakSynthSharp: Audio device is not open, please use MITAudio.OpenAduio() first!");
@@ -38,6 +38,7 @@ namespace ESpeakSynthSharp
             {
                 client = new Client();
                 client.Initialize(dataPath);
+                if (completed != null) client.eventHandler._player.PlaybackEnded = completed;
             }
         }
 

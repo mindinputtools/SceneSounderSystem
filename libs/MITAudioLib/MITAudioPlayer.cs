@@ -9,6 +9,7 @@ namespace MITAudioLib
     public class MITAudioPlayer : IDisposable
     {
         public delegate short[] GetBufferDelegate();
+        public Action PlaybackEnded = null;
         public MITAudioPlayer(int sampleRate, ALFormat format, GetBufferDelegate fillBuffer = null)
         {
             SampleRate = sampleRate;
@@ -85,6 +86,7 @@ namespace MITAudioLib
             }
 
             stopping = false;
+            if (PlaybackEnded != null) PlaybackEnded();
         }
 
         public void Stop()
