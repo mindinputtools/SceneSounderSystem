@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechApi", "SpeechApi\Spee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraApi", "CameraApi\CameraApi.csproj", "{6E41980F-3C4E-461F-B80F-48AF57E9E3E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechService", "SpeechService\SpeechService.csproj", "{5D849403-BE8D-4D4E-8951-A588AE8E210C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemState", "SystemState\SystemState.csproj", "{2E7007E9-D0AA-4986-A369-2BC07D3D1CAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{6E41980F-3C4E-461F-B80F-48AF57E9E3E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E41980F-3C4E-461F-B80F-48AF57E9E3E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E41980F-3C4E-461F-B80F-48AF57E9E3E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D849403-BE8D-4D4E-8951-A588AE8E210C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D849403-BE8D-4D4E-8951-A588AE8E210C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D849403-BE8D-4D4E-8951-A588AE8E210C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D849403-BE8D-4D4E-8951-A588AE8E210C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E7007E9-D0AA-4986-A369-2BC07D3D1CAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E7007E9-D0AA-4986-A369-2BC07D3D1CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E7007E9-D0AA-4986-A369-2BC07D3D1CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E7007E9-D0AA-4986-A369-2BC07D3D1CAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

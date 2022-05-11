@@ -1,11 +1,20 @@
 version: '3.4'
 
 services:
-  speech-api:
-    image: speech-api
+  rabbitmq:
+    image: masstransit/rabbitmq:latest
+    ports:
+     - "5672:5672"
+     - "15672:15672"
+     - "15692:15692"
+
+  speech-service:
+    depends_on:
+      - rabbitmq
+    image: speech-service
     build:
       context: .
-      dockerfile: services/SpeechApi/Dockerfile
+      dockerfile: services/SpeechService/Dockerfile
     environment:
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
       - ASPNETCORE_URLS=http://+:8080
@@ -16,6 +25,20 @@ services:
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native
     user: 1000:1000
+  system-state:
+    depends_on:
+      - rabbitmq
+      - speech-service
+    image: system-state
+    build:
+      context: .
+      dockerfile: services/SystemState/Dockerfile
+
+    volumes:
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - /run/user/1000/pulse/native:/run/user/1000/pulse/native
+    user: 1000:1000
+
   camera-api:
     image: camera-api
     build:
