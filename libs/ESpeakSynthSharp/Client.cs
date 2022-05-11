@@ -129,6 +129,7 @@ namespace ESpeakSynthSharp
         }
         public void Terminate()
         {
+            espeak_SetSynthCallback(null);
             espeak_Terminate();
         }
         public bool SetVoiceByName(string name)

@@ -10,7 +10,7 @@ using Microsoft.Win32;
 using MITAudioLib;
 namespace ESpeakSynthSharp
 {
-    public class ESpeakSynth
+    public class ESpeakSynth : IDisposable
     {
         private string dataPath = "";
         private Client client;
@@ -41,7 +41,7 @@ namespace ESpeakSynthSharp
                 if (completed != null) client.eventHandler._player.PlaybackEnded = completed;
             }
         }
-
+        public void SetCompleted(Action completed) => client.eventHandler._player.PlaybackEnded = completed;
         public bool IsInstalled { get; } = true;
         public bool IsSpeaking
         {
@@ -73,5 +73,15 @@ namespace ESpeakSynthSharp
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         static extern bool SetDllDirectory(string lpPathName);
 #endif
+        public void Dispose()
+        {
+            
+            client.cb = null;
+            client.eventHandler._player = null;
+            client.eventHandler = null;
+            client.Terminate();
+            client = null;
+        }
+
     }
 }

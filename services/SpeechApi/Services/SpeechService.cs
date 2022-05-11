@@ -8,24 +8,23 @@ namespace SpeechApi.Services
     {
         public SpeechService()
         {
-            if (State.Speaker == null) State.Speaker = new ESpeakSynth();
         }
 
-        public Guid Speak(SpeakDTO speakDTO)
+        public async Task<Guid> Speak(SpeakDTO speakDTO)
         {
             QueueEntry queueEntry = new QueueEntry();
             queueEntry.Speak = speakDTO;
             State.SpeechQueue.Enqueue(queueEntry);
-            if (!State.QueueRunning) Task.Run(() => State.ProcessQueue());
+            if (!State.QueueRunning) await Task.Run(State.ProcessQueue);
             return queueEntry.Id;
         }
         public bool IsSpeaking()
         {
-            return State.Speaker.IsSpeaking;
+            return State.IsSpeaking;
         }
         public void Stop()
         {
-            if (State.Speaker.IsSpeaking) State.Speaker.Stop();
+            if (State.IsSpeaking) State.StopAll = true;
         }
     }
 }
