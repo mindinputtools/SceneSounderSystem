@@ -33,7 +33,8 @@ namespace SpeechApi
                 }
                 else done = true;
             } while (!done);
-            QueueRunning = false;            
+            QueueRunning = false;
+            Console.WriteLine("Finished processing speech queue");
         }
     }
 }
