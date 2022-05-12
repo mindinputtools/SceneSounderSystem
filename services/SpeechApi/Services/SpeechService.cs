@@ -15,7 +15,11 @@ namespace SpeechApi.Services
             QueueEntry queueEntry = new QueueEntry();
             queueEntry.Speak = speakDTO;
             State.SpeechQueue.Enqueue(queueEntry);
-            if (!State.QueueRunning) await Task.Run(State.ProcessQueue);
+            if (!State.QueueRunning)
+            {
+                State.SpeakerThread = new Thread(State.ProcessQueue);
+                State.SpeakerThread.Start();
+            }
             return queueEntry.Id;
         }
         public bool IsSpeaking()
@@ -24,7 +28,7 @@ namespace SpeechApi.Services
         }
         public void Stop()
         {
-            if (State.IsSpeaking) State.StopAll = true;
+            if (State.IsSpeaking && State.CurrentSpeaker != null) State.CurrentSpeaker.Stop();
         }
     }
 }

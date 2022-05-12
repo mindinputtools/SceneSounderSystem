@@ -7,6 +7,9 @@ namespace SpeechApi
     public static class State
     {
         public static ConcurrentQueue<QueueEntry> SpeechQueue { get; set; } = new();
+        public static ESpeakSynth CurrentSpeaker { get; private set; }
+        public static Thread SpeakerThread { get; internal set; }
+
         public static Guid? SpeakingId = null;
         public static bool IsSpeaking = false;
         public static bool StopAll = false;
@@ -16,41 +19,44 @@ namespace SpeechApi
             if (SpeechQueue.IsEmpty) return;
             bool done = false;
             State.QueueRunning = true;
-                    
+
 
             do
             {
 
-                
+
                 if (SpeechQueue.TryDequeue(out var queueEntry))
                 {
-                    using (var speaker = new ESpeakSynth()) {
-                    var reset = new AutoResetEvent(false);
-                    var completed = () =>
+                    using (var speaker = new ESpeakSynth())
                     {
-                        Console.WriteLine("Speech completed!");
+                        State.CurrentSpeaker = speaker;
+                        var reset = new AutoResetEvent(false);
+                        var completed = () =>
+                        {
+                            Console.WriteLine("Speech completed!");
 
-                        reset.Set();
-                        IsSpeaking = false;
-                        SpeakingId = null;
-                        return;
-                    };
+                            reset.Set();
+                            IsSpeaking = false;
+                            SpeakingId = null;
+                            return;
+                        };
 
-                    speaker.SetCompleted(completed);
+                        speaker.SetCompleted(completed);
 
-                    speaker.Speak(queueEntry.Speak.Text);
-                    IsSpeaking = true;
-                    SpeakingId = queueEntry.Id;
+                        speaker.Speak(queueEntry.Speak.Text);
+                        IsSpeaking = true;
+                        SpeakingId = queueEntry.Id;
 
-                    Console.WriteLine("Waiting for speech to complete..");
-                    reset.WaitOne(TimeSpan.FromSeconds(120));
-                    Console.WriteLine("Waiting done!");
-                }
+                        Console.WriteLine("Waiting for speech to complete..");
+                        reset.WaitOne(TimeSpan.FromSeconds(120));
+                        Console.WriteLine("Waiting done!");
+                    }
                 }
                 else done = true;
             } while (!done);
             QueueRunning = false;
-
+            CurrentSpeaker = null;
+            SpeakerThread = null;
             Console.WriteLine("Finished processing speech queue");
         }
     }
