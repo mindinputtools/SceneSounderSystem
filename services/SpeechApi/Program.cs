@@ -13,7 +13,7 @@ app.MapPost("/api/speech", async (SpeechService speech, SpeakDTO speak) =>
 {
     return await speech.Speak(speak);
 });
-app.MapGet("/speech", (SpeechService speech, bool? stop) =>
+app.MapGet("/api/speech", (SpeechService speech, bool? stop) =>
 {
     if (stop != null && stop.Value) speech.Stop();
     return speech.IsSpeaking();

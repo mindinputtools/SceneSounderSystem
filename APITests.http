@@ -1,19 +1,19 @@
-POST http://scene-sounder:8080/speech
+POST http://scene-sounder:8080/api/speech
 Content-Type: application/json
 
 {
     "text": "Hi there! Hello and welcome! This is a test, great to see it working! Ok, so let's continue and bring on some more features!"
 }
 ###
-POST http://scene-sounder:8080/speech
+POST http://scene-sounder:8080/api/speech
 Content-Type: application/json
 
 {
     "text": "Ok, so let's get going with something else.. Yes, that's right!!"
 }
 ###
-http://scene-sounder:8080/speech
+http://scene-sounder:8080/api/speech
 ###
-http://scene-sounder:8080/speech?stop=true
+http://scene-sounder:8080/api/speech?stop=true
 ###
 http://scene-sounder:8081/api/camera/check
