@@ -10,7 +10,7 @@ services:
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
       - ASPNETCORE_URLS=http://+:8080
     ports:
-      - "8080:8080"
+      - "8082:8080"
 
     volumes:
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
@@ -24,9 +24,26 @@ services:
     environment:
       - ASPNETCORE_URLS=http://+:8080
     ports:
-      - "8081:8080"
+      - "8083:8080"
 
     volumes:
       - /dev/video0:/dev/video0
+    user: 1000:1000
+    privileged: true
+  system-api:
+    depends_on:
+      - speech-api
+      - camera-api
+    image: system-api
+    build:
+      context: .
+      dockerfile: services/SystemApi/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8081:8080"
+
+    volumes:
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
     user: 1000:1000
     privileged: true

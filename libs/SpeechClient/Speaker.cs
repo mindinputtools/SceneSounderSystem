@@ -5,15 +5,15 @@ namespace SpeechClient
 {
     public class Speaker
     {
-        private readonly IHttpClientFactory httpClientFactory;
+        
         private readonly Uri apiEndpoint;
         private readonly HttpClient httpClient;
 
-        public Speaker(IHttpClientFactory httpClientFactory, Uri apiEndpoint)
+        public Speaker(Uri apiEndpoint, IHttpClientFactory httpClientFactory)
         {
-            this.httpClientFactory = httpClientFactory;
+            
             this.apiEndpoint = apiEndpoint;
-            httpClient = httpClientFactory.CreateClient("SpeakerClient");
+            httpClient = httpClientFactory.CreateClient();
             httpClient.BaseAddress = apiEndpoint;
         }
         public async Task<Guid> SpeakText(string text)
