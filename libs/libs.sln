@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MITAudioLib", "MITAudioLib\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESpeakSynthSharp", "ESpeakSynthSharp\ESpeakSynthSharp.csproj", "{D6857706-9CB9-40CB-B4A7-D826B5913C06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechClient", "SpeechClient\SpeechClient.csproj", "{A3E07C06-0B34-40FE-9F8C-991712AE3C06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{D6857706-9CB9-40CB-B4A7-D826B5913C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6857706-9CB9-40CB-B4A7-D826B5913C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6857706-9CB9-40CB-B4A7-D826B5913C06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3E07C06-0B34-40FE-9F8C-991712AE3C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3E07C06-0B34-40FE-9F8C-991712AE3C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3E07C06-0B34-40FE-9F8C-991712AE3C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3E07C06-0B34-40FE-9F8C-991712AE3C06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
