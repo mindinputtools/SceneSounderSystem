@@ -14,6 +14,7 @@ namespace SystemApi.Services
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            Task.Delay(3000);
             speaker.SpeakText("SceneSounder started!");
         }
 
