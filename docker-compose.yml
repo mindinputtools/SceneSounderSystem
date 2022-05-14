@@ -49,5 +49,8 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
       - /etc/sudoers:/etc/sudoers:ro
+      - /etc/sudo.conf:/etc/sudo.conf:ro
+      - /usr/bin/sudo:/usr/bin/sudo:ro
+      - /usr/lib/sudo:/usr/lib/sudo:ro
     user: 1000:1000
     privileged: true
