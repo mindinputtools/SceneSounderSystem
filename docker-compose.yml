@@ -48,5 +48,6 @@ services:
       - /run/systemd/system:/run/systemd/system
       - /sys/fs/cgroup:/sys/fs/cgroup
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - /etc/sudoers:/etc/sudoers:ro
     user: 1000:1000
     privileged: true
