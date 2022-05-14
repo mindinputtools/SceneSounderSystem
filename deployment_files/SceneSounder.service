@@ -1,9 +1,9 @@
-# /etc/systemd/system/docker-compose-app.service
+# /etc/systemd/user/docker-compose-app.service
 
 [Unit]
 Description=Docker Compose SceneSounder Application Service
-Requires=docker.service
-After=docker.service
+Requires=pulseaudio.service
+After=pulseaudio.service
 
 [Service]
 Type=oneshot
@@ -12,8 +12,8 @@ WorkingDirectory=/home/pi/SceneSounder
 ExecStart=/usr/bin/docker-compose up -d
 ExecStop=/usr/bin/docker-compose down
 TimeoutStartSec=0
-User=pi
-Group=pi
+#User=pi
+#Group=pi
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

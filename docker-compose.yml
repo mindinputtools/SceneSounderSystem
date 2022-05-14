@@ -44,6 +44,9 @@ services:
       - "8081:8080"
 
     volumes:
+      - /bin/systemctl:/bin/systemctl
+      - /run/systemd/system:/run/systemd/system
+      - /sys/fs/cgroup:/sys/fs/cgroup
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
     user: 1000:1000
     privileged: true
