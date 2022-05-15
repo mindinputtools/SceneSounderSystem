@@ -17,14 +17,31 @@ namespace SpeechClient
         }
         public async Task<string> SpeakText(string text)
         {
-            
-            var response = await httpClientShared.PostAsJsonAsync("/api/speech", new SpeakText() { Text = text });
+            var done = false;
+            var retries =0;
+            HttpResponseMessage response = new();
+            do
+            {
+                try
+                {
+                    response = await httpClientShared.PostAsJsonAsync("/api/speech", new SpeakText() { Text = text });
+                    done = true;
+                }
+                catch (HttpRequestException)
+                {
+                    if (retries++ > 3)
+                    throw;
+                    await Task.Delay(1000);
+                }
+                
+            } while (!done);
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine($"SpeechClient error: returned {response.StatusCode}, {response.ReasonPhrase}");
                 return string.Empty;
             }
             var result = await response.Content.ReadAsStringAsync();
+
             return result;
         }
     }
