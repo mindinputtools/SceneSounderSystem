@@ -6,20 +6,24 @@ namespace SpeechClient
     public class Speaker
     {
         
-        private readonly Uri apiEndpoint;
-        private readonly HttpClient httpClient;
+        private readonly Uri apiBaseAddress;
+        internal static readonly HttpClient httpClientShared = new HttpClient();
 
-        public Speaker(Uri apiEndpoint, IHttpClientFactory httpClientFactory)
+        public Speaker(Uri apiAddress)
         {
             
-            this.apiEndpoint = apiEndpoint;
-            httpClient = httpClientFactory.CreateClient();
-            httpClient.BaseAddress = apiEndpoint;
+            this.apiBaseAddress = apiAddress;
+            httpClientShared.BaseAddress = apiAddress;
         }
         public async Task<Guid> SpeakText(string text)
         {
             
-            var response = await httpClient.PostAsJsonAsync("/api/speech", new SpeakText() { Text = text });
+            var response = await httpClientShared.PostAsJsonAsync("/api/speech", new SpeakText() { Text = text });
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"SpeechClient error: returned {response.StatusCode}, {response.ReasonPhrase}");
+                return Guid.Empty;
+            }
             var result = await response.Content.ReadAsStringAsync();
             return Guid.Parse(result);
         }

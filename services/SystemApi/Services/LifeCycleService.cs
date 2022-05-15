@@ -7,10 +7,10 @@ namespace SystemApi.Services
         private readonly IConfiguration configuration;
         private readonly Speaker speaker;
 
-        public LifeCycleService(IConfiguration configuration, IHttpClientFactory httpClientFactory)
+        public LifeCycleService(IConfiguration configuration)
         {
             this.configuration = configuration;
-            speaker = new Speaker(new Uri(configuration["SpeechApiAddress"]), httpClientFactory);
+            speaker = new Speaker(new Uri(configuration["SpeechApiAddress"]));
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {

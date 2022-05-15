@@ -10,7 +10,7 @@ namespace SystemApi.Services
         public SystemService(IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
             this.configuration = configuration;
-            speaker = new Speaker(new Uri(configuration["SpeechApiAddress"]), httpClientFactory);
+            speaker = new Speaker(new Uri(configuration["SpeechApiAddress"]));
         }
 
         public void Poweroff()
