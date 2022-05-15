@@ -7,17 +7,17 @@ namespace SystemApi.Services
         private readonly IConfiguration configuration;
         private readonly Speaker speaker;
 
-        public SystemService(IConfiguration configuration, IHttpClientFactory httpClientFactory)
+        public SystemService(IConfiguration configuration)
         {
             this.configuration = configuration;
-            speaker = new Speaker(new Uri(configuration["SpeechApiAddress"]));
+            speaker = new Speaker();
         }
 
-        public void Poweroff()
+        public async Task Poweroff()
         {
             var t = new Thread(PwrThread);
-            speaker.SpeakText("Powering off SceneSounder..");
-            Task.Delay(2000);
+            await speaker.SpeakText("Powering off SceneSounder..");
+            await Task.Delay(2000);
             t.Start();
         }
         private void PwrThread()

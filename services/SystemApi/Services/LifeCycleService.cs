@@ -2,7 +2,7 @@
 
 namespace SystemApi.Services
 {
-    public class LifeCycleService : IHostedService
+    public class LifeCycleService : BackgroundService
     {
         private readonly IConfiguration configuration;
         private readonly Speaker speaker;
@@ -10,17 +10,18 @@ namespace SystemApi.Services
         public LifeCycleService(IConfiguration configuration)
         {
             this.configuration = configuration;
-            speaker = new Speaker(new Uri(configuration["SpeechApiAddress"]));
-        }
-        public async Task StartAsync(CancellationToken cancellationToken)
-        {
-            Task.Delay(3000);
-            speaker.SpeakText("SceneSounder started!");
+            speaker = new Speaker();
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            speaker.SpeakText("SceneSounder shutting down!");
+            var result = await speaker.SpeakText("SceneSounder started!");
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                result = await speaker.SpeakText("I'm checking my state..");
+                await Task.Delay(5000, stoppingToken);
+            }
+            result = await speaker.SpeakText("SceneSounder shutting down!");
         }
     }
 }

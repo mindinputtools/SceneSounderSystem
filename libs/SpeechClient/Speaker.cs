@@ -6,14 +6,14 @@ namespace SpeechClient
     public class Speaker
     {
         
-        private readonly Uri apiBaseAddress;
-        internal static readonly HttpClient httpClientShared = new HttpClient();
+        internal static readonly HttpClient httpClientShared = new HttpClient()
+        {
+            BaseAddress = new Uri("http://speech-api:8080") // hard coded for now
+        };
 
-        public Speaker(Uri apiAddress)
+        public Speaker()
         {
             
-            this.apiBaseAddress = apiAddress;
-            httpClientShared.BaseAddress = apiAddress;
         }
         public async Task<Guid> SpeakText(string text)
         {
