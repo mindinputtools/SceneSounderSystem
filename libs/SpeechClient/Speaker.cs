@@ -15,17 +15,17 @@ namespace SpeechClient
         {
             
         }
-        public async Task<Guid> SpeakText(string text)
+        public async Task<string> SpeakText(string text)
         {
             
             var response = await httpClientShared.PostAsJsonAsync("/api/speech", new SpeakText() { Text = text });
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine($"SpeechClient error: returned {response.StatusCode}, {response.ReasonPhrase}");
-                return Guid.Empty;
+                return string.Empty;
             }
             var result = await response.Content.ReadAsStringAsync();
-            return Guid.Parse(result);
+            return result;
         }
     }
 }

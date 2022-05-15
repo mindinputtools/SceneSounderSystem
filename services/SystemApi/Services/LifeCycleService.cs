@@ -16,6 +16,7 @@ namespace SystemApi.Services
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var result = await speaker.SpeakText("SceneSounder started!");
+            Console.WriteLine($"Got Id {result}");
             while (!stoppingToken.IsCancellationRequested)
             {
                 result = await speaker.SpeakText("I'm checking my state..");

@@ -19,9 +19,9 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.MapGet("/api/system/poweroff", (SystemApi.Services.SystemService systemService) =>
+app.MapGet("/api/system/poweroff", async (SystemApi.Services.SystemService systemService) =>
 {
-    systemService.Poweroff();
+    await systemService.Poweroff();
     return true;
 });
 
