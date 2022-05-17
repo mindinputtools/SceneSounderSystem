@@ -4,10 +4,12 @@ namespace CameraApi.Interfaces
 {
     public interface ICamera
     {
-        Mat GetMatImage();
-        void StartCamera();
-        void StopCamera();
-        bool CheckCamera();
+        bool Running { get; }
+
+        Task<Mat> GetMatImage();
+        Task StartCamera();
+        Task StopCamera();
+        Task<bool> CheckCamera();
 
     }
 }

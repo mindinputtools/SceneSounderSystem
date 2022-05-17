@@ -6,16 +6,20 @@ namespace CameraApi.Services
     public class OpenCVCamera : ICamera
     {
         private VideoCapture _video;
+        private Thread cameraThread;
         private bool _cameraRunning;
         private bool _saveFrame;
         private bool _gotFrame;
         private Action<Mat> GotFrame;
+
+        public bool Running => _cameraRunning;
+
         public OpenCVCamera()
         {
             //            Console.WriteLine("Opening camera...");
 
         }
-        private void cameraThread()
+        private void cameraThreadProc()
         {
             _cameraRunning = true;
             while (_cameraRunning)
@@ -25,7 +29,7 @@ namespace CameraApi.Services
             }
             _video.Release();
         }
-        public Mat GetMatImage()
+        public async Task<Mat> GetMatImage()
         {
             Mat _curFrame = _cameraRunning ? _video.RetrieveMat() : new Mat();
             if (!_cameraRunning || _curFrame.Empty())
@@ -41,50 +45,68 @@ namespace CameraApi.Services
             }
             return _curFrame;
         }
-        public void StartCamera()
+        public async Task StartCamera()
         {
             _video = new VideoCapture(0);
-
-            Task.Run(() => cameraThread());
-        }
-
-        public void StopCamera()
-        {
-            _cameraRunning = false;
-
-        }
-        public bool CheckCamera()
-        {
-            _video = new VideoCapture(0);
-            bool result = default;
-            int tries = 0;
-            Console.WriteLine("Checking camera...");
             _video.Open(0);
             if (!_video.IsOpened())
             {
                 Console.WriteLine("Cannot open camera, no image input available...");
-                return false;
+                return;
             }
-            Mat tmp = new Mat();
+            Console.WriteLine($"Opened camera with resolution: {_video.FrameWidth}X{_video.FrameHeight}");
+            cameraThread = new Thread(cameraThreadProc);
+            cameraThread.Start();
+        }
 
-            _video.Grab();
-            tmp = _video.RetrieveMat();
-            while (tmp.Empty() && tries++ < 5)
+        public async Task StopCamera()
+        {
+            _cameraRunning = false;
+
+        }
+        public async Task<bool> CheckCamera()
+        {
+            if (_cameraRunning)
             {
-                _video.Read(tmp);
-            }
-            if (tmp.Empty())
-            {
-                Console.WriteLine("No usable frame from camera after retries...");
+                Console.WriteLine("Checking running camera...");
+                var mat = await GetMatImage();
+                if (!mat.Empty()) return true;
+                Console.WriteLine("Camera NOT OK");
+                return false;
             }
             else
             {
-                Console.WriteLine("Camera OK...");
-                result = true;
+                _video = new VideoCapture(0);
+                bool result = default;
+                int tries = 0;
+                Console.WriteLine("Checking non-running camera...");
+                _video.Open(0);
+                if (!_video.IsOpened())
+                {
+                    Console.WriteLine("Cannot open camera, no image input available...");
+                    return false;
+                }
+                Mat tmp = new Mat();
+
+                _video.Grab();
+                tmp = _video.RetrieveMat();
+                while (tmp.Empty() && tries++ < 5)
+                {
+                    _video.Read(tmp);
+                }
+                if (tmp.Empty())
+                {
+                    Console.WriteLine("No usable frame from camera after retries...");
+                }
+                else
+                {
+                    Console.WriteLine("Camera OK...");
+                    result = true;
+                }
+                _video.Release();
+                tmp.Release();
+                return result;
             }
-            _video.Release();
-            tmp.Release();
-            return result;
         }
 
     }

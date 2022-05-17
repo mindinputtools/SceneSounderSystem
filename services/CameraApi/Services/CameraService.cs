@@ -10,9 +10,25 @@ namespace CameraApi.Services
         {
             this.camera = camera;
         }
-        public bool Check()
+        public async Task<bool> Check()
         {
-            return camera.CheckCamera();
+            return await camera.CheckCamera();
         }
+        public async Task Start()
+        {
+            await camera.StartCamera();
+        }
+        public async Task Stop()
+        {
+            await camera.StopCamera();
+        }
+        public async Task<IResult> GetImage()
+        {
+            if (!camera.Running) await camera.StartCamera();
+            var mat = await camera.GetMatImage();
+            var bytes = mat.ToBytes();
+            return Results.File(bytes, "image/png");
+        }
+        public bool Running() => camera.Running;
     }
 }
