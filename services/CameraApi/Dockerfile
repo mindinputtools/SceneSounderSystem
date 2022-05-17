@@ -1,4 +1,9 @@
 FROM mindinputtools/opencv-csharp-base AS base
+RUN apt update && apt upgrade -y
+RUN apt install v4l-utils ffmpeg -y
+# Cleanup
+RUN apt clean -y
+RUN rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 EXPOSE 8080
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
