@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<ICamera, OpenCVCamera>();
 builder.Services.AddScoped<CameraService>();
-builder.Services.AddHostedService<CameraApi.Services.LifeCycleService>();
+builder.Services.AddHostedService<CameraApi.Services.CameraLifeCycle>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

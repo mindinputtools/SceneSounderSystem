@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<SpeechService>();
-builder.Services.AddHostedService<LifeCycleService>();
+builder.Services.AddHostedService<SpeechLifeCycle>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

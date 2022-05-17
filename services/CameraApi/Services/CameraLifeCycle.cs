@@ -1,10 +1,10 @@
 ﻿namespace CameraApi.Services
 {
-    public class LifeCycleService : IHostedService
+    public class CameraLifeCycle : IHostedService
     {
         private readonly CameraService cs;
 
-        public LifeCycleService(CameraService cs)
+        public CameraLifeCycle(CameraService cs)
         {
             this.cs = cs;
         }

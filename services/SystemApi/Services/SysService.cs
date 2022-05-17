@@ -2,12 +2,12 @@
 
 namespace SystemApi.Services
 {
-    public class SystemService
+    public class SysService
     {
         private readonly IConfiguration configuration;
         private readonly Speaker speaker;
 
-        public SystemService(IConfiguration configuration)
+        public SysService(IConfiguration configuration)
         {
             this.configuration = configuration;
             speaker = new Speaker();

@@ -2,12 +2,12 @@
 
 namespace SystemApi.Services
 {
-    public class LifeCycleService : BackgroundService
+    public class SystemLifeCycle : BackgroundService
     {
         private readonly IConfiguration configuration;
         private readonly Speaker speaker;
 
-        public LifeCycleService(IConfiguration configuration)
+        public SystemLifeCycle(IConfiguration configuration)
         {
             this.configuration = configuration;
             speaker = new Speaker();
