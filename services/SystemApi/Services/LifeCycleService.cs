@@ -20,7 +20,7 @@ namespace SystemApi.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 result = await speaker.SpeakText("I'm checking my state..");
-                await Task.Delay(5000, stoppingToken);
+                await Task.Delay(10000, stoppingToken);
             }
             result = await speaker.SpeakText("SceneSounder shutting down!");
         }
