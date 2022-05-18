@@ -55,3 +55,16 @@ services:
       - /usr/lib/sudo:/usr/lib/sudo:ro
     user: pi:pi
     privileged: true
+  objdetect-yolo:
+    image: objdetect-yolo
+    build:
+      context: .
+      dockerfile: services/ObjDetectYOLO/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8084:8080"
+
+#    volumes:
+#      - /dev/video0:/dev/video0
+    user: 1000:1000

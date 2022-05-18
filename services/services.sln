@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraApi", "CameraApi\Came
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemApi", "SystemApi\SystemApi.csproj", "{6DC7C34E-2CAB-4615-86D9-E467F1AD9B16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjDetectYOLO", "ObjDetectYOLO\ObjDetectYOLO.csproj", "{5A5B3761-A163-444A-97FC-715997097015}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{6DC7C34E-2CAB-4615-86D9-E467F1AD9B16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DC7C34E-2CAB-4615-86D9-E467F1AD9B16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DC7C34E-2CAB-4615-86D9-E467F1AD9B16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A5B3761-A163-444A-97FC-715997097015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A5B3761-A163-444A-97FC-715997097015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A5B3761-A163-444A-97FC-715997097015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A5B3761-A163-444A-97FC-715997097015}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
