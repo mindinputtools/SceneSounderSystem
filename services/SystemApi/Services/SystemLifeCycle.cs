@@ -19,7 +19,7 @@ namespace SystemApi.Services
             Console.WriteLine($"Got Id {result}");
             while (!stoppingToken.IsCancellationRequested)
             {
-                result = await speaker.SpeakText("I'm checking my state..");
+//                result = await speaker.SpeakText("I'm checking my state..");
                 await Task.Delay(10000, stoppingToken);
             }
             result = await speaker.SpeakText("SceneSounder shutting down!");
