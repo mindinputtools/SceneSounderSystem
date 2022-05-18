@@ -5,3 +5,4 @@ rm -f ./packages/*.nu*
 dotnet pack -o packages libs/MITAudioLib
 dotnet pack -o packages libs/ESpeakSynthSharp
 dotnet pack -o packages libs/SpeechClient
+dotnet pack -o packages libs/CameraClient
