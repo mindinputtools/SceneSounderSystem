@@ -56,6 +56,9 @@ services:
     user: pi:pi
     privileged: true
   objdetect-yolo:
+    depends_on:
+      - camera-api
+      - speech-api
     image: objdetect-yolo
     build:
       context: .
