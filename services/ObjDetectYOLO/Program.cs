@@ -26,7 +26,7 @@ app.MapGet("/api/objdetect/yolo", async (YOLOService yOLO, bool? auto, bool? spe
     if (speak != null && speak.Value)
     {
         var speaker = new SpeechClient.Speaker();
-        if (!preds.Any()) speaker.SpeakText("Didn't recognize any known objects!")
+        if (!preds.Any()) speaker.SpeakText("Didn't recognize any known objects!");
         foreach (var p in preds)
         {
             speaker.SpeakText($"{p.Label.Name}"); // , probability = {Math.Round(p.Score, 2)} percent
