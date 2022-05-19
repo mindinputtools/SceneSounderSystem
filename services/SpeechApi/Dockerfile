@@ -1,6 +1,10 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal AS base
 RUN apt update && apt upgrade -y
 RUN apt install libespeak-ng1 libespeak-ng-libespeak1 espeak-ng espeak-ng-espeak libopenal1 pulseaudio apulse -y
+# Cleanup
+RUN apt clean -y
+RUN rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 EXPOSE 8080
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder

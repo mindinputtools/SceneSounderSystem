@@ -1,6 +1,10 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal AS base
 RUN apt update && apt upgrade -y
 RUN apt install libgdiplus -y
+# Cleanup
+RUN apt clean -y
+RUN rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 EXPOSE 8080
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
@@ -24,5 +28,5 @@ RUN dotnet publish "ObjDetectYOLO.csproj" -c Release -o /app/publish /p:UseAppHo
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY services/ObjDetectYOLO/Assets .
+COPY services/ObjDetectYOLO/Assets/Weights/* ./Assets/Weights/
 ENTRYPOINT ["dotnet", "ObjDetectYOLO.dll"]
