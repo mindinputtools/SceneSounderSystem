@@ -1,0 +1,75 @@
+version: '3.4'
+
+services:
+  speech-api:
+    image: speech-api
+    environment:
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8082:8080"
+
+    volumes:
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - /run/user/1000/pulse/native:/run/user/1000/pulse/native
+    user: 1000:1000
+  camera-api:
+    image: camera-api
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8083:8080"
+
+    volumes:
+      - /dev/video0:/dev/video0
+    user: 1000:1000
+    privileged: true
+  system-api:
+    depends_on:
+      - speech-api
+      - camera-api
+    image: system-api
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8081:8080"
+
+    volumes:
+      - /bin/systemctl:/bin/systemctl
+      - /run/systemd/system:/run/systemd/system
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - /etc/sudoers:/etc/sudoers:ro
+      - /etc/sudoers.d:/etc/sudoers.d:ro
+      - /etc/sudo.conf:/etc/sudo.conf:ro
+      - /usr/bin/sudo:/usr/bin/sudo:ro
+      - /usr/lib/sudo:/usr/lib/sudo:ro
+    user: pi:pi
+    privileged: true
+  objdetect-yolo:
+    depends_on:
+      - camera-api
+      - speech-api
+    image: objdetect-yolo
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8084:8080"
+
+#    volumes:
+#      - /dev/video0:/dev/video0
+    user: 1000:1000
+  web-ui:
+    depends_on:
+      - camera-api
+      - speech-api
+      - system-api
+      - objdetect-yolo
+    image: web-ui
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "80:80"
+
+#    volumes:
+#      - /dev/video0:/dev/video0
