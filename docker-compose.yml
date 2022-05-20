@@ -82,7 +82,7 @@ services:
       context: .
       dockerfile: ui/WebUI/Dockerfile
     environment:
-      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_URLS=http://+:80
     ports:
       - "80:80"
 
