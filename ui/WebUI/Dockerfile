@@ -6,6 +6,8 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+COPY ./nuget.config .
+COPY packages/* ./packages/
 COPY ["ui/WebUI/WebUI.csproj", "ui/WebUI/"]
 RUN dotnet restore "ui/WebUI/WebUI.csproj"
 COPY . .
