@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   speech-api:
-    image: speech-api
+    image: mindinputtools/scene-sounder-speech-api
     environment:
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
       - ASPNETCORE_URLS=http://+:8080
@@ -14,7 +14,7 @@ services:
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native
     user: 1000:1000
   camera-api:
-    image: camera-api
+    image: mindinputtools/scene-sounder-camera-api
     environment:
       - ASPNETCORE_URLS=http://+:8080
     ports:
@@ -28,7 +28,7 @@ services:
     depends_on:
       - speech-api
       - camera-api
-    image: system-api
+    image: mindinputtools/scene-sounder-system-api
     environment:
       - ASPNETCORE_URLS=http://+:8080
     ports:
@@ -50,7 +50,7 @@ services:
     depends_on:
       - camera-api
       - speech-api
-    image: objdetect-yolo
+    image: mindinputtools/scene-sounder-objdetect-yolo
     environment:
       - ASPNETCORE_URLS=http://+:8080
     ports:
@@ -65,7 +65,7 @@ services:
       - speech-api
       - system-api
       - objdetect-yolo
-    image: web-ui
+    image: mindinputtools/scene-sounder-web-ui
     environment:
       - ASPNETCORE_URLS=http://+:80
     ports:

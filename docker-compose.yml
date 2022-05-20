@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   speech-api:
-    image: speech-api
+    image: mindinputtools/scene-sounder-speech-api
     build:
       context: .
       dockerfile: services/SpeechApi/Dockerfile
@@ -17,7 +17,7 @@ services:
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native
     user: 1000:1000
   camera-api:
-    image: camera-api
+    image: mindinputtools/scene-sounder-camera-api
     build:
       context: .
       dockerfile: services/CameraApi/Dockerfile
@@ -34,7 +34,7 @@ services:
     depends_on:
       - speech-api
       - camera-api
-    image: system-api
+    image: mindinputtools/scene-sounder-system-api
     build:
       context: .
       dockerfile: services/SystemApi/Dockerfile
@@ -59,7 +59,7 @@ services:
     depends_on:
       - camera-api
       - speech-api
-    image: objdetect-yolo
+    image: mindinputtools/scene-sounder-objdetect-yolo
     build:
       context: .
       dockerfile: services/ObjDetectYOLO/Dockerfile
@@ -77,7 +77,7 @@ services:
       - speech-api
       - system-api
       - objdetect-yolo
-    image: web-ui
+    image: mindinputtools/scene-sounder-web-ui
     build:
       context: .
       dockerfile: ui/WebUI/Dockerfile
