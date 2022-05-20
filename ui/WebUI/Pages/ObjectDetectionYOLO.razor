@@ -1,0 +1,42 @@
+﻿@page "/yolo"
+@using WebUI.Services
+@using Yolov5Net.Scorer
+@inject ObjDetectYoloClient yoloClient
+<h1>Object detection with YOLO</h1>
+<div>
+    <button @onclick="DetectClicked">Detect objects from camera</button>
+    <button @onclick="ToggleSpeak">@(speakResult ? "Speak result" : "Don't speak result'")</button>
+</div>
+<div>
+    <h2>Result</h2>
+    @if (loading)
+    {
+        <p>Loading detection results...</p>
+    }
+    else
+    {
+        if (!predictions.Any())
+        {
+            <p>No results to show</p>
+        }
+        foreach (var result in predictions)
+        {
+            <p>@result.Label.Name</p>
+        }
+    }
+</div>
+@code {
+    private IEnumerable<YoloPrediction> predictions = new List<YoloPrediction>();
+    private bool speakResult = true;
+    private bool loading = false;
+    private async Task DetectClicked()
+    {
+        loading = true;
+        predictions = await yoloClient.YoloPredictions(speak: speakResult);
+        loading = false;
+    }
+    private void ToggleSpeak()
+    {
+        speakResult = !speakResult;
+    }
+}

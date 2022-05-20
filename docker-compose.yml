@@ -71,3 +71,20 @@ services:
 #    volumes:
 #      - /dev/video0:/dev/video0
     user: 1000:1000
+  web-ui:
+    depends_on:
+      - camera-api
+      - speech-api
+      - system-api
+      - objdetect-yolo
+    image: web-ui
+    build:
+      context: .
+      dockerfile: ui/WebUI/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "80:80"
+
+#    volumes:
+#      - /dev/video0:/dev/video0

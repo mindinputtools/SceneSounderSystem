@@ -17,3 +17,9 @@ http://scene-sounder:8082/api/speech
 http://scene-sounder:8082/api/speech?stop=true
 ###
 http://scene-sounder:8083/api/camera/check
+###
+http://scene-sounder:8081/api/system/poweroff
+###
+http://scene-sounder:8084/api/objdetect/yolo/
+###
+http://scene-sounder:8084/api/objdetect/yolo/?speak=true
