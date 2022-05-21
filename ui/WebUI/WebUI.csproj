@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="CameraClient" Version="1.0.0" />
     <PackageReference Include="SpeechClient" Version="1.0.0" />
+    <PackageReference Include="SystemClient" Version="1.0.0" />
     <PackageReference Include="Yolov5Net" Version="1.0.9" />
   </ItemGroup>
 

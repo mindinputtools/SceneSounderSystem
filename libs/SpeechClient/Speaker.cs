@@ -44,5 +44,11 @@ namespace SpeechClient
 
             return result;
         }
+        public async Task<bool> StopAsync()
+        {
+            var response = await httpClientShared.GetAsync("/api/speech/?stop=true");
+            response.EnsureSuccessStatusCode();
+            return true;
+        }
     }
 }
