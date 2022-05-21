@@ -2,8 +2,8 @@
     <button @onclick="ToggleMenu">System actions</button>
 </div>
 <ul class="@(menuCollapsed ? "collapse" : null) list-unstyled">
-    <li><button value="Shut down" @onclick="ShutdownBtn" /> </li>
-    <li><button value="Reboot" @onclick="RebootBtn" /> </li>
+    <li><button @onclick="ShutdownBtn">Shut down</button> </li>
+    <li><button @onclick="RebootBtn">Reboot</button> </li>
 </ul>
 @code {
     private bool menuCollapsed = true;
