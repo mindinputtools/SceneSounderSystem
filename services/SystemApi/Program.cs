@@ -24,6 +24,16 @@ app.MapGet("/api/system/poweroff", async (SystemApi.Services.SysService systemSe
     await systemService.Poweroff();
     return true;
 });
+app.MapGet("/api/system/reboot", async (SystemApi.Services.SysService systemService) =>
+{
+    await systemService.Reboot();
+    return true;
+});
+app.MapPost("/api/system/setaudiovolume", async (SystemApi.Services.SysService systemService, int vol) =>
+{
+    await systemService.SetAudioVolume(vol);
+    return true;
+});
 
 app.Run();
 
