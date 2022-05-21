@@ -18,7 +18,7 @@ namespace SystemClient
         }
         public async Task<bool> SetAudioVolumeAsync(int vol)
         {
-            var response = await httpClientShared.PostAsJsonAsync<int>($"/api/system/setaudiovolume/", vol);
+            var response = await httpClientShared.PostAsync($"/api/system/setaudiovolume/?vol={vol}", null);
             return response.IsSuccessStatusCode;
         }
 
