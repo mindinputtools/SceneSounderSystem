@@ -1,0 +1,27 @@
+﻿@using SpeechClient
+<EditForm Model="@indata">
+    <label for="vol">Audio volume</label>
+    <InputNumber id="vol" @bind-Value="indata.Volume" @oninput="ChangeVol" />
+
+</EditForm>
+
+@code {
+    private IndataModel indata = new();
+    private Speaker speaker = new();
+    private SystemClient.SystemClient sys = new();
+    protected override async Task OnInitializedAsync()
+    {
+        indata.Volume = 50;
+        await base.OnInitializedAsync();
+    }
+    async Task ChangeVol()
+    {
+        await speaker.StopAsync();
+        await sys.SetAudioVolumeAsync(indata.Volume);
+        await speaker.SpeakText("This is me talking.");
+    }
+    class IndataModel
+    {
+        public int Volume { get; set; }
+    }
+}

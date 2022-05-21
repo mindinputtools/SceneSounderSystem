@@ -1,0 +1,23 @@
+﻿<div>
+    <button @onclick="ToggleMenu">System actions</button>
+</div>
+<ul class="@(menuCollapsed ? "collapse" : null) list-unstyled">
+    <li><button value="Shut down" @onclick="ShutdownBtn" /> </li>
+    <li><button value="Reboot" @onclick="RebootBtn" /> </li>
+</ul>
+@code {
+    private bool menuCollapsed = true;
+    private SystemClient.SystemClient sys = new();
+    private void ToggleMenu()
+    {
+        menuCollapsed = !menuCollapsed;
+    }
+    private async Task ShutdownBtn()
+    {
+        await sys.PowerOffAsync();
+    }
+    private async Task RebootBtn()
+    {
+        await sys.RebootAsync();
+    }
+}
