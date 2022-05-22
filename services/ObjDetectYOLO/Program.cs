@@ -29,10 +29,12 @@ app.MapGet("/api/objdetect/yolo", async (YOLOService yOLO, bool? speak) =>
     {
         var speaker = new SpeechClient.Speaker();
         if (!preds.Any()) speaker.SpeakText("Didn't recognize any known objects!");
+        var textToSpeak = string.Empty;
         foreach (var p in preds)
         {
-            speaker.SpeakText($"{p.Label.Name}"); // , probability = {Math.Round(p.Score, 2)} percent
+            textToSpeak += $"{p.Label.Name}. "; // , probability = {Math.Round(p.Score, 2)} percent
         }
+        if (!string.IsNullOrEmpty(textToSpeak)) speaker.SpeakText(textToSpeak);
     }
     return preds;
 });
