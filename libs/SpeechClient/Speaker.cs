@@ -15,7 +15,7 @@ namespace SpeechClient
         {
             
         }
-        public async Task<string> SpeakText(string text)
+        public async Task<string> SpeakText(string text, string? callbackUrl = null)
         {
             var done = false;
             var retries =0;
@@ -24,7 +24,7 @@ namespace SpeechClient
             {
                 try
                 {
-                    response = await httpClientShared.PostAsJsonAsync("/api/speech", new SpeakText() { Text = text });
+                    response = await httpClientShared.PostAsJsonAsync("/api/speech", new SpeakText() { Text = text, CallbackUrl = callbackUrl });
                     done = true;
                 }
                 catch (HttpRequestException)

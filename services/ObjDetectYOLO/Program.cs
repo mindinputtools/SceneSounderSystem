@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<YOLOService>();
+builder.Services.AddHostedService<YoloLifeCycle>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -42,6 +43,10 @@ app.MapGet("/api/objdetect/yolo/start", async (YOLOService yOLO) =>
 app.MapGet("/api/objdetect/yolo/stop", async (YOLOService yOLO) =>
 {
     if (State.AutoSpeakerRunning) await yOLO.StopAutoSpeaker();
+});
+app.MapGet("/api/objdetect/yolo/speechdone", () =>
+{
+    State.SpeechCompleted.Set();
 });
 
 app.Run();

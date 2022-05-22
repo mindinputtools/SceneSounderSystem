@@ -14,6 +14,7 @@ namespace SpeechApi.Services
         {
             QueueEntry queueEntry = new QueueEntry();
             queueEntry.Speak = speakDTO;
+            if (!string.IsNullOrEmpty(speakDTO.CallbackUrl)) queueEntry.CallbackUrl = speakDTO.CallbackUrl;
             State.SpeechQueue.Enqueue(queueEntry);
             if (!State.QueueRunning)
             {

@@ -1,4 +1,4 @@
 ﻿namespace SpeechApi.Models
 {
-    public record SpeakDTO(string Text);
+    public record SpeakDTO(string Text, string? CallbackUrl);
 }

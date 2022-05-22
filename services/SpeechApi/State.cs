@@ -14,7 +14,7 @@ namespace SpeechApi
         public static bool IsSpeaking = false;
         public static bool StopAll = false;
         public static bool QueueRunning = false;
-        public static void ProcessQueue()
+        public static async void ProcessQueue()
         {
             if (SpeechQueue.IsEmpty) return;
             bool done = false;
@@ -50,6 +50,14 @@ namespace SpeechApi
                         Console.WriteLine("Waiting for speech to complete..");
                         reset.WaitOne(TimeSpan.FromSeconds(120));
                         Console.WriteLine("Waiting done!");
+                        if (!string.IsNullOrEmpty(queueEntry.CallbackUrl))
+                        {
+                            using (var http = new HttpClient())
+                            {
+                                await http.GetAsync($"{queueEntry.CallbackUrl}?id={queueEntry.Id}");
+                                Console.WriteLine($"Send speech completed to {queueEntry.CallbackUrl}");
+                            }
+                        }
                     }
                 }
                 else done = true;

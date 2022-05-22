@@ -44,12 +44,20 @@ namespace ObjDetectYOLO.Services
                         preds = scorer.Predict(image);
                         //                        if (preds.Any()) preds = preds.OrderByDescending(o => o.Score);
                         var textToSpeak = string.Empty;
-                        if (!preds.Any()) speaker.SpeakText("Didn't recognize any known objects!");
+                        if (!preds.Any())
+                        {
+                            speaker.SpeakText("Didn't recognize any known objects!", "http://objdetect-yolo:8080/api/objdetect/yolo/speechdone");
+                            State.SpeechCompleted.WaitOne(TimeSpan.FromSeconds(5));
+                        }
                         foreach (var p in preds)
                         {
                             textToSpeak += $"{p.Label.Name}. ";
                         }
-                        if (!string.IsNullOrEmpty(textToSpeak)) speaker.SpeakText(textToSpeak);
+                        if (!string.IsNullOrEmpty(textToSpeak))
+                        {
+                            speaker.SpeakText(textToSpeak, "http://objdetect-yolo:8080/api/objdetect/yolo/speechdone");
+                            State.SpeechCompleted.WaitOne(TimeSpan.FromSeconds(5));
+                        }
                     } // image
                 } // camera
             }

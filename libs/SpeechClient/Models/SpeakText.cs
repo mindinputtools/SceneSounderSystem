@@ -9,5 +9,6 @@ namespace SpeechClient.Models
     internal class SpeakText
     {
         public string Text { get; set; }
+        public string? CallbackUrl { get; set; }
     }
 }
