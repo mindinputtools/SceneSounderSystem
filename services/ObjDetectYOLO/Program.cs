@@ -1,3 +1,4 @@
+using ObjDetectYOLO;
 using ObjDetectYOLO.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.MapGet("/api/objdetect/yolo", async (YOLOService yOLO, bool? auto, bool? speak) =>
+app.MapGet("/api/objdetect/yolo", async (YOLOService yOLO, bool? speak) =>
 {
     var preds = await yOLO.YOLOPredictionsFromCamera();
     if (preds.Any()) preds = preds.OrderByDescending(o => o.Score);
@@ -34,7 +35,14 @@ app.MapGet("/api/objdetect/yolo", async (YOLOService yOLO, bool? auto, bool? spe
     }
     return preds;
 });
-
+app.MapGet("/api/objdetect/yolo/start", async (YOLOService yOLO) =>
+{
+    if (!State.AutoSpeakerRunning) await yOLO.StartAutoSpeaker();
+});
+app.MapGet("/api/objdetect/yolo/stop", async (YOLOService yOLO) =>
+{
+    if (State.AutoSpeakerRunning) await yOLO.StopAutoSpeaker();
+});
 
 app.Run();
 
