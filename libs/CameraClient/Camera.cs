@@ -18,5 +18,9 @@ namespace CameraClient
         {
             return await httpClientShared.GetFromJsonAsync<bool>("/api/camera/check");
         }
+        public async Task Stop()
+        {
+            await httpClientShared.GetAsync("/api/camera/stop");
+        }
     }
 }

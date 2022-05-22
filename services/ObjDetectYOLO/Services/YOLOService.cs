@@ -62,6 +62,7 @@ namespace ObjDetectYOLO.Services
                 } // camera
             }
             await speaker.SpeakText("YOLO Autospeaker stopped.");
+            camera.Stop();
         }
     }
 }
