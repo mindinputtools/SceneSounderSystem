@@ -25,7 +25,7 @@
         {
             <p>@result.Label.Name</p>
         }
-        <p><img src="http://camera-api:8080/api/camera/image" width=400 height=400 alt="Image preview" /></p>
+        <p><img src="http://scene-sounder:8083/api/camera/image" width=400 height=400 alt="Image preview" /></p>
     }
 </div>
 }
@@ -44,9 +44,11 @@
     {
         speakResult = !speakResult;
     }
-    private void ToggleAutoSpeak()
+    private async void ToggleAutoSpeak()
     {
         autoSpeak = !autoSpeak;
+        if (autoSpeak) await yoloClient.StartYolo();
+        else await yoloClient.StopYolo(); 
     }
 
 }
