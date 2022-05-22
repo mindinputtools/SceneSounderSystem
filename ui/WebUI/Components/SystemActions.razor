@@ -6,7 +6,8 @@
     <li><button @onclick="RebootBtn">Reboot</button> </li>
 </ul>
 @code {
-    private bool menuCollapsed = true;
+    [Parameter]
+    public bool menuCollapsed { get; set; } = true;
     private SystemClient.SystemClient sys = new();
     private void ToggleMenu()
     {
