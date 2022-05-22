@@ -4,8 +4,8 @@
 @inject ObjDetectYoloClient yoloClient
 <h1>Object detection with YOLO</h1>
 <div>
-    <button @(autoSpeak ? disabled : null) @onclick="DetectClicked">Detect objects from camera</button>
-    <button @(autoSpeak ? disabled : null) @onclick="ToggleSpeak">@(speakResult ? "Speak result" : "Don't speak result'")</button>
+    <button disabled="@autoSpeak" @onclick="DetectClicked">Detect objects from camera</button>
+    <button disabled="@autoSpeak" @onclick="ToggleSpeak">@(speakResult ? "Speak result" : "Don't speak result'")</button>
     <button @onclick="ToggleAutoSpeak">@(autoSpeak ? "Auto speak is on" : "Auto speak is off")</button>
 </div>
 @if (!autoSpeak) {
