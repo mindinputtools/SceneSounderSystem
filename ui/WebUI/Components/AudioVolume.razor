@@ -1,4 +1,5 @@
 ﻿@using SpeechClient
+@using System.ComponentModel.DataAnnotations
 <EditForm Model="@indata">
     <label for="vol">Audio volume</label>
     <InputNumber id="vol" @bind-Value="indata.Volume" @oninput="ChangeVol" />
@@ -22,6 +23,7 @@
     }
     class IndataModel
     {
+        [Range(minimum:0, maximum:100)]
         public int Volume { get; set; }
     }
 }
