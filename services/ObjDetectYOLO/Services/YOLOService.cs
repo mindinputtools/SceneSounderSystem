@@ -42,13 +42,14 @@ namespace ObjDetectYOLO.Services
                     using (var image = Image.FromStream(stream))
                     {
                         preds = scorer.Predict(image);
-//                        if (preds.Any()) preds = preds.OrderByDescending(o => o.Score);
+                        //                        if (preds.Any()) preds = preds.OrderByDescending(o => o.Score);
+                        var textToSpeak = string.Empty;
                         if (!preds.Any()) speaker.SpeakText("Didn't recognize any known objects!");
                         foreach (var p in preds)
                         {
-                            speaker.SpeakText($"{p.Label.Name}"); // , probability = {Math.Round(p.Score, 2)} percent
+                            textToSpeak += $"{p.Label.Name}. ";
                         }
-
+                        if (!string.IsNullOrEmpty(textToSpeak)) speaker.SpeakText(textToSpeak);
                     } // image
                 } // camera
             }
