@@ -31,14 +31,16 @@ services:
     image: mindinputtools/scene-sounder-system-api
     environment:
       - ASPNETCORE_URLS=http://+:8080
-    ports:
-      - "8081:8080"
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+#    ports:
+#      - "8081:8080"
 
     volumes:
       - /bin/systemctl:/bin/systemctl
       - /run/systemd/system:/run/systemd/system
       - /sys/fs/cgroup:/sys/fs/cgroup
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - /run/user/1000/pulse/native:/run/user/1000/pulse/native
       - /etc/sudoers:/etc/sudoers:ro
       - /etc/sudoers.d:/etc/sudoers.d:ro
       - /etc/sudo.conf:/etc/sudo.conf:ro
