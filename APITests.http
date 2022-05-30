@@ -23,3 +23,9 @@ http://scene-sounder:8081/api/system/poweroff
 http://scene-sounder:8084/api/objdetect/yolo/
 ###
 http://scene-sounder:8084/api/objdetect/yolo/?speak=true
+###
+http://scene-sounder:8084/api/objdetect/yolo/start
+###
+http://scene-sounder:8084/api/objdetect/yolo/stop
+###
+POST http://scene-sounder:8081/api/system/setaudiovolume/?vol=40
