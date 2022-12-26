@@ -9,7 +9,7 @@ sudo chmod +x /usr/local/sbin/usb-gadget.sh
 sudo cp usbgadget.service /lib/systemd/system/usbgadget.service
 sudo systemctl enable usbgadget.service
 sudo echo dtoverlay=dwc2 >> /boot/config.txt
-sudo sed -i 's/$/ modules-load=dwc2/' /boot/cmdline.txt
+sudo sed -i 's/$/ modules-load=dwc2,g_ether/' /boot/cmdline.txt
 sudo echo libcomposite >> /etc/modules
 sudo echo denyinterfaces usb0 >> /etc/dhcpcd.conf
 sudo systemctl enable getty@ttyGS0.service
